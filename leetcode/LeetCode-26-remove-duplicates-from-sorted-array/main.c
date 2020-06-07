@@ -4,7 +4,7 @@
 //不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
 
 // 题目：https://leetcode.com/problems/remove-duplicates-from-sorted-array/
-// 分析：zhujiangtao.com
+// 分析：http://zhujiangtao.com/?p=1250
 
 #include <stdio.h>
 
