@@ -67,37 +67,35 @@ package main
 
 import "fmt"
 
-
 func isPrime(n int64) bool {
-
 	if n <= 1 {
 		return false
 	}
 
-    if n == 2 || n == 3 {
+	if n == 2 || n == 3 {
 		return true
 	}
 
-    if n % 2 == 0 {
+	if n % 2 == 0 {
 		return false
 	}
 
-    // 关于质数分布的规律：大于等于5的质数一定和6的倍数相邻
-    // 即大于等于5的质数一定是 6x-1 和 6x+1，6x+2 ~ 6x+4 一定不是质数
-    // 即大于等于5的质数一定满足 n%6==1 or n%6==5
-    // https://blog.csdn.net/songyunli1111/article/details/78690447
-    if n % 6 != 1 && n % 6 != 5 {
+	// 关于质数分布的规律：大于等于5的质数一定和6的倍数相邻
+	// 即大于等于5的质数一定是 6x-1 和 6x+1，6x+2 ~ 6x+4 一定不是质数
+	// 即大于等于5的质数一定满足 n%6==1 or n%6==5
+	// https://blog.csdn.net/songyunli1111/article/details/78690447
+	if n % 6 != 1 && n % 6 != 5 {
 		return false
 	}
 
-    // 从 [5, sqrt(n)] 遍历寻找是否是其因数
-    for i:=int64(5); i * i <= n; i++ {
-        if n % i == 0 {
+	// 从 [5, sqrt(n)] 遍历寻找是否是其因数
+	for i:=int64(5); i * i <= n; i++ {
+		if n % i == 0 {
 			return false
 		}
-    }
+	}
 
-    return true
+	return true
 }
 
 func main(){
