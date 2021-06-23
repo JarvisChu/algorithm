@@ -23,6 +23,8 @@ What is the 10 001st prime number?
 
 另外，关于质数判断的函数 isPrime 也可以直接从 Problem 3 中复制过来使用
 
+> [007_overview.pdf](https://blog-1252824460.cos.ap-nanjing.myqcloud.com/007_overview.pdf) 中有详细介绍质数的高效判断方法
+
 ### CPP
 
 ```cpp

@@ -17,6 +17,7 @@ What is the largest prime factor of the number 600851475143 ?
 
 C\C++ 中int类型（包括long int类型）的最大值为2147483647，所以600851475143不能使用int类型表示。可以使用int64_t类型来表示，包含在stdint.h头文件下，这是一个long long int，足以表示600851475143。
 
+> [007_overview.pdf](https://blog-1252824460.cos.ap-nanjing.myqcloud.com/007_overview.pdf) 中有详细介绍质数的高效判断方法
 
 ```cpp
 #include <stdio.h>
