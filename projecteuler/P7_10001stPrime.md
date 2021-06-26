@@ -159,7 +159,7 @@ def isPrime(n):
     if n % 6 != 1 and n % 6 != 5 : return False
 
     # 从 [5, sqrt(n)] 遍历寻找是否是其因数
-    for i in range(5, int(math.sqrt(n))):
+    for i in range(5, int(math.sqrt(n)) + 1):
         if n % i == 0 : return False
 
     return True
