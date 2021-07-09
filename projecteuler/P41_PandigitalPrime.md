@@ -378,6 +378,47 @@ def prevPermutation(perm) :
 
 	return True
 
+
+# 获取perm的下一个序列
+# std::next_permutation
+# 未使用
+def nextPermutation(perm) :
+	# 长度不超过1，直接返回
+	if len(perm) <= 1 :
+		return False
+
+	# 从后往前，找到第一个 perm[i] < perm[i+1]
+	# e.g perm=1238[57]64, perm[i]=5
+	i = len(perm) - 2
+	while i >= 0 : 
+		if perm[i] < perm[i+1] :
+			break
+		i = i - 1
+
+	# 找不到，说明整个 perm 是递减的，已是最大，没有next
+	if i == -1 :
+		return False
+
+	# 从后往前 [末尾, i+1]，找到第一个比 perm[i] 大的数，然后交换
+	# e.g. perm=1238[5]7[6]4, 交换 5 和 6
+	for k in range(len(perm) - 1, i, -1) :
+		if perm[k] > perm[i] :
+			# 交换 perm[k] 和 perm[i]
+			perm[k], perm[i] = perm[i], perm[k] # python 支持这样交换
+			break
+
+	# i+1 到末尾目前是降序的，改为升序
+	# e.g perm=12386[754] => perm=12386[457]
+	for k in range(i + 1, len(perm)) :
+		last = len(perm) + i - k
+		if k >= last :
+			break
+
+		# 交换 perm[k] 和 perm[last]
+		perm[k], perm[last] = perm[last], perm[k] # python 支持这样交换
+
+	return True
+
 digits = ['9','8','7','6','5','4','3','2','1']
 
 for n in range(9, 0, -1):
