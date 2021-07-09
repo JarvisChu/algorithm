@@ -215,6 +215,7 @@ func prevPermutation(perm []int32) bool {
 		if perm[k] < perm[i] {
 			// 交换 perm[k] 和 perm[i]
 			perm[k], perm[i] = perm[i], perm[k] // golang 支持这样交换
+			break
 		}
 	}
 
@@ -262,6 +263,7 @@ func nextPermutation(perm []int32) bool {
 		if perm[k] > perm[i] {
 			// 交换 perm[k] 和 perm[i]
 			perm[k], perm[i] = perm[i], perm[k] // golang 支持这样交换
+			break;
 		}
 	}
 
