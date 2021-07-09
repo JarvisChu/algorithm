@@ -364,6 +364,7 @@ def prevPermutation(perm) :
 		if perm[k] < perm[i] :
 			# 交换 perm[k] 和 perm[i]
 			perm[k], perm[i] = perm[i], perm[k] # python 支持这样交换
+			break
 
 	# i+1 到末尾目前是升序的，改为降序
 	# e.g perm=12385[467] => perm=12385[764]
