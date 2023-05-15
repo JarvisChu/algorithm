@@ -39,26 +39,27 @@ using namespace std;
 // 最高效
 // 使用hash_map，直接存储索引，更加高效
 // 仿照官方的Java解法
-// Accepted, 24 ms
+// Accepted, 13 ms, beats 77.23% 
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
         int n = s.size();
         int max_len = 0;
-        std::unordered_map<char, int> hash_map; // 存储当前字符的位置（+1）
+        std::unordered_map<char, int> hash_map; // 存储当前字符的位置
 
         // try to extend the range [i, j]
         for(int j = 0, i = 0; j < n; j ++) {
             auto it = hash_map.find(s[j]);
             if (it != hash_map.end()) {
-                i = max(it->second, i); // 如果重复，不用清除[i, 重复的位置] 之间的缓存
+                i = it->second < i ? i : it->second + 1; 
+                                        // 如果重复，不用清除[i, 重复的位置] 之间的缓存
                                         // 只需要判断重复的位置是否在滑动窗口中
                                         // 如果重复的位置，在滑动窗口前面，即 <i，那就不用移动i
                                         // 如果重复的位置，在滑动窗口中，即 > i， 则更新i即可
             }
 
             max_len = max(max_len, j - i + 1);
-            hash_map[s[j]] = j + 1;
+            hash_map[s[j]] = j;
         }
 
         return max_len;
