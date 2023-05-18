@@ -43,18 +43,26 @@ public:
 // 思路2
 // 逼近法，左右两条线，不断往中间靠。
 // 原理参考官网的说明，https://leetcode.com/problems/container-with-most-water/solution/
-// 
+// 还可以参考：http://www.noteanddata.com/leetcode-11-Container-With-Most-Water-java-solution-note.html
+// 理解：
+// 记左侧的柱子为 l，右侧的柱子为 r，求 l 和 r 之间的最大面积
+// 面积由宽和高决定，宽是 r-l, 高是 min(height[l], height[r])
+// 从两边开始，往里面寻找最大面积
+// 当前面积是  (r-l) * min(height[l], height[r]) ， 
+// 为了寻找大的面积，要么增加宽度，要么增加高度。 r-l 已经是最宽的了，所以只能增加高度
+// 增加高度的方法是：短的向内移动，长的保留。 为什么这样可行？ 原因在于：
+//    如果不让短的向内移动，而是让长的向内移动， 宽度在减少，而高度始终是受限于短的，所以无论怎么找，都不会比当前面积更大了。
 
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-      int maxVolume = 0;
+      int maxA = 0;
       int l = 0, r = height.size() - 1;
       while(l < r) {
-        maxVolume = max(maxVolume, (r-l) * min(height[l], height[r]) );
+        maxA = max(maxA, (r-l) * min(height[l], height[r]) );
         height[l] >= height[r] ? r--:l++; // 短的向内移动，长的保留
       }
-      return maxVolume;
+      return maxA;
     }
 };
 
