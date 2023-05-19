@@ -96,7 +96,66 @@ public:
 };
 
 
-// 思路2：先排个序，然后再找
+// 思路2，先排序，[i, j, k], i 和 j 从前往后找，k 从后往前找。Time Limit Exceeded
+class Solution3 {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        // 将 nums 排序
+        std::sort(nums.begin(), nums.end());
+
+        // [i, j, k], i 和 j 从前往后找，k 从后往前找
+        // 因为已经递增排序了，当 i 不变，j++ 时，k 不用回到末尾重新找，可以继续往前找
+        vector<vector<int>> ret;
+        for(int i = 0; i < nums.size() - 2; i++){
+            if(nums[i] > 0) break; // 三个正数的和，不可能是 0
+            if(nums[i] == 0) {     // 只能是3个0 才可能是0，否则都不可能是 0
+                if(nums[i+1] == 0 && nums[i+2] == 0) {
+                    //cout << i << "," << i+1 << ", " << i+2 << endl;
+                    ret.push_back(vector<int> {0, 0, 0});
+                }
+                break;
+            }
+
+            // nums[i] < 0
+            // 跳过重复的 i, |a| 表示当前的数值
+            // |a|aa 时，要 continue 到 a|a|a,  即 [xxx, |-1|, ..., -1, -1, xxx] 跳到 [ xxx, -1, ..., |-1|, -1, xxx]
+            // 因为最终结果可能是 [-1,-1,2]，即 [a a b] 这种结果
+            if(nums[i] == nums[i+1] && nums[i] == nums[i+2] ) continue;
+
+            // 当前为 |a|axxx，或者 |a|xxx
+            // (1) 如果当前为 |a|axxx，则下一步时，需要忽略第二个a, 直接跳到|x|xx， 如 [|-1|, -1, 1, 2, xxx] => [|1|, 2, xxx]
+            // (2) 如果当前为 |a|xxx，则下一步正常进行即可，如
+            int skip = 0;
+            if(nums[i] == nums[i+1]){
+                skip = 1; // (1)
+            }
+
+            int curk = nums.size() - 1; // 初始时 k 在末尾
+            for(int j = i+1; j < nums.size() - 1; j++){
+                if( (j > i + 1) && nums[j] == nums[j-1]) continue; // 跳过所有重复的 j
+
+                int remain = 0 - nums[i] - nums[j];     
+                for(int k = curk; k > j; k--){
+                    if(nums[k] == nums[k-1] && (k-1 > j)) continue; // 跳过所有重复的 k
+
+                    if(nums[k] == remain){ // 找到
+                        //cout << i << "," << j << ", " << k << endl;
+                        ret.push_back(vector<int> {nums[i], nums[j], nums[k]});
+                        curk = k - 1; // 下一个 j 时，k 只需要从 k-1 开始找即可
+                        break;
+                    }
+                }
+            }
+
+            i += skip;
+        }
+
+        return ret;    
+    }
+};
+
+
+// 思路3：先排个序，然后再找
 // https://leetcode.com/problems/3sum/discuss/7402/Share-my-AC-C%2B%2B-solution-around-50ms-O(N*N)-with-explanation-and-comments
 class Solution {
 public:
@@ -105,8 +164,9 @@ public:
         std::sort(nums.begin(), nums.end()); // 先排个序，方便后面去重
 
         for(int i = 0; i < nums.size(); i++){
-            int target = -nums[i]; // target 是三元组，剩下要找的两个元素的和
+            if(nums[i] > 0) break; // 三个正数的和，不可能是 0
 
+            int target = -nums[i]; // target 是三元组，剩下要找的两个元素的和
             int front = i + 1;
             int rear = nums.size() - 1; 
 
