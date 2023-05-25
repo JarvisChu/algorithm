@@ -18,6 +18,7 @@ public:
     }
 };
 
+// Accepted 8 ms Beats 18.75%
 // 思路2: 和上一题 026-remove-duplicates-from-sorted-array 基本相同
 //     k 记录当前位置前面有几个和 val 相等的数，则当前位置的数 nums[i] 放到 nums[i-k] 位置
 //     比如：nums = [3,2,2,3], val = 3
